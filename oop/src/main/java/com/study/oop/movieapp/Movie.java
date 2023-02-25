@@ -1,6 +1,7 @@
 package com.study.oop.movieapp;
 
 import com.study.oop.movieapp.condition.DiscountCondition;
+import com.study.oop.movieapp.condition.DiscountConditionType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -41,5 +42,21 @@ public class Movie {
         }
 
         return fee;
+    }
+
+    public boolean isDiscountable(LocalDateTime whenScreened, int sequence) {
+        for (DiscountCondition condition : discountConditions) {
+            if (condition.getType() == DiscountConditionType.PERIOD) {
+                if (condition.isDiscountable(whenScreened.getDayOfWeek(), whenScreened.toLocalTime())) {
+                    return true;
+                }
+            } else {
+              if (condition.isDiscountable(sequence)) {
+                  return true;
+              }
+            }
+        }
+
+        return false;
     }
 }
