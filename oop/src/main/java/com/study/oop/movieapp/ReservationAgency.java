@@ -4,7 +4,6 @@ import com.study.oop.movieapp.condition.DiscountCondition;
 import com.study.oop.movieapp.condition.DiscountConditionType;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class ReservationAgency {
@@ -24,22 +23,19 @@ public class ReservationAgency {
             if (discountable) break;
         }
 
-        Money fee;
+        Money fee = Money.ZERO;
         if (discountable) {
-            Money discountAmount = Money.ZERO;
             switch (movie.getMovieType()) {
                 case AMOUNT_DISCOUNT:
-                    discountAmount = movie.getDiscountAmount();
+                    fee = movie.calculateAmountDiscountedFee();
                     break;
                 case PERCENT_DISCOUNT:
-                    discountAmount = movie.getFee().times(movie.getDiscountPercent());
+                    fee = movie.calculatePercentDiscountedFee();
                     break;
                 case NONE_DISCOUNT:
-                    discountAmount = Money.ZERO;
+                    fee = movie.calculateNoneDiscountedFee();
                     break;
             }
-
-            fee = movie.getFee().minus(discountAmount);
         } else {
             fee = movie.getFee();
         }
