@@ -3,6 +3,10 @@ package com.study.oop.movieapp;
 import com.study.oop.movieapp.condition.DiscountCondition;
 import com.study.oop.movieapp.condition.DiscountConditionType;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 public class ReservationAgency {
     public Reservation reserve(Screening screening, Customer customer, int audienceCount) {
         Movie movie = screening.getMovie();
@@ -10,11 +14,11 @@ public class ReservationAgency {
         boolean discountable = false;
         for (DiscountCondition condition : movie.getDiscountConditions()) {
             if (condition.getType() == DiscountConditionType.PERIOD) {
-                discountable = screening.getWhenScreened().getDayOfWeek().equals(condition.getDayOfWeek()) &&
-                        condition.getStartTime().compareTo(screening.getWhenScreened().toLocalTime()) <= 0 &&
-                        condition.getEndTime().compareTo(screening.getWhenScreened().toLocalTime()) >= 0;
+                DayOfWeek screenedDayOfWeek = screening.getWhenScreened().getDayOfWeek();
+                LocalTime screenedStartTime = screening.getWhenScreened().toLocalTime();
+                discountable = condition.isDiscountable(screenedDayOfWeek, screenedStartTime);
             } else {
-                discountable = condition.getSequence() == screening.getSequence();
+                discountable = condition.isDiscountable(screening.getSequence());
             }
 
             if (discountable) break;
