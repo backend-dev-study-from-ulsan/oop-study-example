@@ -1,7 +1,17 @@
 package com.study.oop.movieapp.condition;
 
-import com.study.oop.movieapp.Screening;
+import lombok.Getter;
+import lombok.Setter;
 
-public interface DiscountCondition {
-    boolean isSatisfiedBy(Screening screening);
+import java.time.DayOfWeek;
+import java.time.LocalTime;
+
+@Getter
+@Setter
+public class DiscountCondition {
+    private DiscountConditionType type;
+    private int sequence;
+    private DayOfWeek dayOfWeek;
+    private LocalTime startTime;
+    private LocalTime endTime;
 }

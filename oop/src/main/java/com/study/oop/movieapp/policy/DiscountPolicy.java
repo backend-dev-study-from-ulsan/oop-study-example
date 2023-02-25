@@ -16,11 +16,11 @@ public abstract class DiscountPolicy {
     }
 
     public Money calculateDiscountAmount(Screening screening) {
-        for (DiscountCondition each : conditions) {
-            if (each.isSatisfiedBy(screening)) {
-                return getDiscountAmount(screening);
-            }
-        }
+//        for (DiscountCondition each : conditions) {
+//            if (each.isSatisfiedBy(screening)) {
+//                return getDiscountAmount(screening);
+//            }
+//        }
 
         return Money.ZERO;
     }
