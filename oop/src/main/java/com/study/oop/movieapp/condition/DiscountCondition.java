@@ -1,5 +1,6 @@
 package com.study.oop.movieapp.condition;
 
+import com.study.oop.movieapp.Screening;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,27 +10,27 @@ import java.time.LocalTime;
 @Getter
 @Setter
 public class DiscountCondition {
+
     private DiscountConditionType type;
     private int sequence;
     private DayOfWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
 
-    public boolean isDiscountable(DayOfWeek dayOfWeek, LocalTime time) {
-        if (type != DiscountConditionType.PERIOD) {
-            throw new IllegalArgumentException();
+    public boolean isSatisfiedBy(Screening screening) {
+        if (type == DiscountConditionType.PERIOD) {
+            return isSatisfiedByPeriod(screening);
         }
-
-        return this.dayOfWeek.equals(dayOfWeek) &&
-                this.startTime.compareTo(time) <= 0 &&
-                this.endTime.compareTo(time) >= 0;
+        return false;
     }
 
-    public boolean isDiscountable(int sequence) {
-        if (type != DiscountConditionType.SEQUENCE) {
-            throw new IllegalArgumentException();
-        }
+    private boolean isSatisfiedByPeriod(Screening screening) {
+        return dayOfWeek.equals(screening.getWhenScreened().getDayOfWeek()) && (!startTime.isAfter(
+            screening.getWhenScreened().toLocalTime())) && (endTime.isAfter(
+            screening.getWhenScreened().toLocalTime()));
+    }
 
-        return this.sequence == sequence;
+    private boolean isSatisfiedBySequence(Screening screening) {
+        return sequence == screening.getSequence();
     }
 }
