@@ -2,9 +2,7 @@ package com.study.oop.movieapp.policy;
 
 import com.study.oop.movieapp.Money;
 import com.study.oop.movieapp.Screening;
-import com.study.oop.movieapp.condition.DiscountCondition;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

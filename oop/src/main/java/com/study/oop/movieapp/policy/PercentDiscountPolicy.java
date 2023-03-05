@@ -2,7 +2,6 @@ package com.study.oop.movieapp.policy;
 
 import com.study.oop.movieapp.Money;
 import com.study.oop.movieapp.Screening;
-import com.study.oop.movieapp.condition.DiscountCondition;
 
 public class PercentDiscountPolicy extends DiscountPolicy{
     private double percent;

@@ -2,7 +2,7 @@ package com.study.oop.movieapp.condition;
 
 import com.study.oop.movieapp.Screening;
 
-public class SequenceCondition{
+public class SequenceCondition implements DiscountCondition{
     private int sequence;
 
     public SequenceCondition(int sequence) {
