@@ -11,6 +11,6 @@ public class SequenceCondition{
 
 
     public boolean isSatisfiedBy(Screening screening) {
-        return screening.isSequence(sequence);
+        return sequence == screening.getSequence();
     }
 }
