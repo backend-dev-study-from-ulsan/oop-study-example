@@ -11,19 +11,25 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Movie {
+public abstract class Movie {
+
     private String title;
     private Duration runningTime;
     private Money fee;
     private List<DiscountCondition> discountConditions;
 
-    private MovieType movieType;
-    private Money discountAmount;
-    private double discountPercent;
+    public Movie(String title, Duration runningTime, Money fee,
+        List<DiscountCondition> discountConditions) {
+        this.title = title;
+        this.runningTime = runningTime;
+        this.fee = fee;
+        this.discountConditions = discountConditions;
+    }
 
     public Money calculateMovieFee(Screening screening) {
-        if (isDiscountable(screening))
+        if (isDiscountable(screening)) {
             return fee.minus(calculateDiscountAmount());
+        }
         return fee;
     }
 
@@ -32,19 +38,10 @@ public class Movie {
             .anyMatch(condition -> condition.isSatisfiedBy(screening));
     }
 
-    private Money calculateDiscountAmount() {
-        return discountAmount;
+    abstract protected Money calculateDiscountAmount();
+
+    protected Money getFee() {
+        return fee;
     }
 
-    private Money calculateAmountDiscountAmount() {
-        return discountAmount;
-    }
-
-    private Money calculatePercentDiscountAmount(){
-        return fee.times(discountPercent);
-    }
-
-    private Money calculateNoneDiscountAmount() {
-        return Money.ZERO;
-    }
 }
